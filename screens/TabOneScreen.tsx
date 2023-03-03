@@ -1,56 +1,21 @@
-import { StyleSheet } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-
-const TabOneScreen = ({ navigation }: RootTabScreenProps<"TabOne">) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
-  );
-};
-export default TabOneScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
-
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
 
 interface Consumption {
   water: string;
   time: string;
 }
 
-const WaterTracker = () => {
+const TabOneScreen = ({ navigation }: RootTabScreenProps<"TabOne">) => {
   const [water, setWater] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [data, setData] = useState<Consumption[]>([]);
@@ -80,7 +45,7 @@ const WaterTracker = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Water Tracker</Text>
 
       <TextInput
@@ -115,20 +80,18 @@ const WaterTracker = () => {
           <Text style={styles.dataTitle}>Water Consumption Data</Text>
           {data.map((item, index) => (
             <Text key={index} style={styles.dataItem}>
-              {item.water} oz at {item.time}
+              {item.water} oz in the {item.time}
             </Text>
           ))}
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#fff",
   },
   title: {
@@ -170,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WaterTracker;
+export default TabOneScreen;

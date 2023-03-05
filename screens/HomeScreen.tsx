@@ -15,7 +15,7 @@ interface Consumption {
   time: string;
 }
 
-const TabOneScreen = ({ navigation }: RootTabScreenProps<"TabOne">) => {
+const HomeScreen = ({ navigation }: RootTabScreenProps<"HomeScreen">) => {
   const [water, setWater] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [data, setData] = useState<Consumption[]>([]);
@@ -133,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TabOneScreen;
+export default HomeScreen;

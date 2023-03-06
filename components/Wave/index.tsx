@@ -12,8 +12,9 @@ import Animated, {
 import MaskedView from "@react-native-masked-view/masked-view";
 import { mix } from "react-native-redash";
 import StyleGuide from "../StyleGuide";
+import { SIZE } from "./utils";
+import { styles } from "./style";
 
-const SIZE = Dimensions.get("window").width - 64;
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const Wave = () => {
@@ -62,40 +63,18 @@ const Wave = () => {
     };
   });
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "black",
-      }}
-    >
-      <MaskedView
-        maskElement={
-          <View
-            style={{
-              backgroundColor: "black",
-              width: SIZE,
-              height: SIZE,
-              borderRadius: SIZE / 2,
-            }}
-          />
-        }
+    <>
+      <Svg
+        width={SIZE}
+        height={Dimensions.get("window").height}
+        style={styles.svg}
+        viewBox="0 0 1 0.1"
       >
-        <Svg
-          width={SIZE}
-          height={SIZE}
-          style={{ backgroundColor: "#242424" }}
-          viewBox="0 0 1 1"
-        >
-          <AnimatedPath fill="#86b4ff" animatedProps={path2} />
-          <AnimatedPath
-            fill={StyleGuide.palette.primary}
-            animatedProps={path1}
-          />
-        </Svg>
-      </MaskedView>
-    </View>
+        <AnimatedPath fill="#86b4ff" animatedProps={path2} />
+        <AnimatedPath fill={StyleGuide.palette.primary} animatedProps={path1} />
+      </Svg>
+      <View style={styles.lower} />
+    </>
   );
 };
 

@@ -4,22 +4,26 @@ import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName, Pressable, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModelScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import HomeScreen from "../screens/HomeScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import Home from "../screens/Home";
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import {
+  createDrawerNavigator,
+  DrawerToggleButton,
+} from "@react-navigation/drawer";
+import Settings from "../screens/Settings";
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   return (
@@ -41,7 +45,7 @@ const RootNavigator = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="Root"
-        component={BottomTabNavigator}
+        component={DrawerNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -49,72 +53,28 @@ const RootNavigator = () => {
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 };
 
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
+const Drawer = createDrawerNavigator();
 
-const BottomTabNavigator = () => {
-  const colorScheme = useColorScheme();
+export const DrawerNavigator = () => {
+  const nav = useNavigation();
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="HomeScreen"
+    <Drawer.Navigator
+      id="DrawerNavigator"
+      initialRouteName="Settings"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        drawerPosition: "right",
+        headerRight: () => <DrawerToggleButton />,
+        headerTransparent: true,
+        drawerStyle: { width: "100%" },
       }}
     >
-      <BottomTab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={({ navigation }: RootTabScreenProps<"HomeScreen">) => ({
-          title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="tachometer"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginLeft: 15 }}
-              />
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="tachometer"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
+      <Drawer.Screen name="Home" component={Home} />
+    </Drawer.Navigator>
   );
 };
 

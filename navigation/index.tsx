@@ -68,8 +68,7 @@ export const DrawerNavigator = () => {
         headerRight: () => (
           <DrawerToggleButton tintColor={StyleGuide.palette.primary} />
         ),
-        // headerTransparent: true,
-        drawerStyle: { width: "100%" },
+        drawerStyle: { width: "100%", backgroundColor: "#ccc" },
       }}
     >
       <Drawer.Screen name="Home" component={Home} />

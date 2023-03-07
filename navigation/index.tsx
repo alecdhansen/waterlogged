@@ -24,6 +24,7 @@ import {
   DrawerToggleButton,
 } from "@react-navigation/drawer";
 import Settings from "../screens/Settings";
+import StyleGuide from "../components/StyleGuide";
 
 const Navigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
   return (
@@ -65,11 +66,17 @@ export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       id="DrawerNavigator"
-      initialRouteName="Settings"
+      initialRouteName="Home"
       screenOptions={{
         drawerPosition: "right",
-        headerRight: () => <DrawerToggleButton />,
-        headerTransparent: true,
+        headerLeftContainerStyle: { display: "none" },
+        headerTitleStyle: {
+          display: "none",
+        },
+        headerRight: () => (
+          <DrawerToggleButton tintColor={StyleGuide.palette.primary} />
+        ),
+        // headerTransparent: true,
         drawerStyle: { width: "100%" },
       }}
     >

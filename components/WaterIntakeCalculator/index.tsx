@@ -23,7 +23,6 @@ const WaterIntakeCalculator = () => {
   const [drankToday, setDrankToday] = useState<string>("");
   const [waterData, setWaterData] = useState<WaterData[]>([]);
 
-  // Load data from AsyncStorage when the component mounts
   useEffect(() => {
     const loadFromStorage = async () => {
       const data = await AsyncStorage.getItem("waterData");
